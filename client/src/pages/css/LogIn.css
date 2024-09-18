@@ -6,9 +6,9 @@
     align-items: center;
 }
 
-main {
-    width: 50%;
-    height: 50%;
+.main-login {
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,12 +16,12 @@ main {
 }
 
 .form {
-    --background: #d3d3d3;
-    --input-focus: #2d8cf0;
-    --font-color: #323232;
-    --font-color-sub: #666;
-    --bg-color: #fff;
-    --main-color: #323232;
+        --background: #d3d3d3;
+        --input-focus: #2d8cf0;
+        --font-color: #323232;
+        --font-color-sub: #666;
+        --bg-color: #fff;
+        --main-color: #323232;
     padding: 20px;
     background: var(--background);
     display: flex;

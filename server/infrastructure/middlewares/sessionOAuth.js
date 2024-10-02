@@ -1,8 +1,9 @@
 const session = require('express-session');
-const sessionManager = require('express').Router();
 
-module.exports = sessionManager.use(session({
+const sessionManager = session({
     secret: process.env.KEY_SECRET,
     resave: false,
     saveUninitialized: false
-}))
+})
+
+module.exports = sessionManager;

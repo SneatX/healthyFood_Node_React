@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 router.get("/auth-check", (req, res) => {
+    console.log(req.user)
+    console.log(req)
     if(req.isAuthenticated){
         res.status(200).json({authenticated: true, user: req.user, msj: "Estás autenticado"});
     }else{

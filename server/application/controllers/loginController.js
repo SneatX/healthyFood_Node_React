@@ -18,7 +18,7 @@ exports.googleAuthCallback = (req, res, next) => {
                 console.error('Error al iniciar sesión:', err);
                 return next(err);
             }
-            return res.redirect('/'); 
+            return res.redirect(`http://localhost:${process.env.VITE_PORT}`);
         });
     })(req, res, next);
 }; 

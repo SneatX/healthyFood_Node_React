@@ -1,9 +1,9 @@
-import './css/LogIn.css';
+import './css/LogIn.css'
 
 export default function LogIn() {
 
   function validateWith(service) {
-    window.open(`http://localhost:${import.meta.env.VITE_PORT}/auth/${service}`, "_self")
+    window.open(`https://localhost:${import.meta.env.EXPRESS_PORT}/auth/${service}`, "_self")
   }
 
   return (

@@ -1,11 +1,16 @@
-const passport = require('passport');
-const configPassportGoogleOAuth = require('../middlewares/googleOAuth.js');
-const authController = require('../controllers/loginController.js');
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
-// Configuración de estrategias de Passport
-configPassportGoogleOAuth(passport)
+const { 
+    configPassportGoogleOAuth,
+    serializeAndDeserializeUser
+} = require('../middlewares/passportAuthConfig.js');
+const authController = require('../controllers/loginController.js');
+
+// Configuración de Passport
+serializeAndDeserializeUser()
+configPassportGoogleOAuth()
 
 // Google OAuth
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))

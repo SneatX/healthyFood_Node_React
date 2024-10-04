@@ -1,22 +1,19 @@
 const express = require('express')
 const passport = require('passport')
-const session = require('express-session');
 const cors = require('cors')
 
-const { jsonParseErrorHandler } = require('../middlewares/errorHandling')
-const { limiTotal } = require('../middlewares/rateLimit')
-
-const indexRouter = require('../../application/routes/indexRouter')
-const sessionManager = require('../middlewares/sessionOAuth')
-const loginRouter = require('../../application/routes/loginRouter')
+const mainRouter = require('../../application/routes/mainRouter')
+const sessionManager = require('../middlewares/sessionManager')
+// const { jsonParseErrorHandler } = require('../middlewares/errorHandling')
+// const { limiTotal } = require('../middlewares/rateLimit')
 
 const createServer = () => {
     //Creacion del servidor con express
     const app = express()
 
-    //Conficuracion del cors para permitir el acceso desde otros dominios
+    //Conficuracion del cors para permitir el acceso desde otros dominios como el del cliente
     const corsOptions = {
-        origin: '*',
+        origin: `http://localhost:${process.env.VITE_PORT}`,
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
     }
@@ -24,15 +21,14 @@ const createServer = () => {
 
     //Configuracion de la sesion y passport
     app.use(sessionManager)
-
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.use(jsonParseErrorHandler)
-    app.use(limiTotal)
+    // app.use(jsonParseErrorHandler)
+    // app.use(limiTotal)
 
-    app.use("/", indexRouter)
-    app.use("/login", loginRouter)
+    //Llamado del router general
+    app.use("/", mainRouter)
 
     return app
 }

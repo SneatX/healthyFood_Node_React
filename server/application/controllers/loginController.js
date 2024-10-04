@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-exports.googleAuthCallback = (req, res, next) => {
+function googleAuthCallback (req, res, next) {
     passport.authenticate('google', async (err, user, info) => {
         if (err) {
             console.error('Error en la autenticación:', err);
@@ -13,6 +13,7 @@ exports.googleAuthCallback = (req, res, next) => {
             console.log('Autenticación fallida o cancelada:', info);
             return res.redirect('/');
         }
+
         req.logIn(user, (err) => {
             if (err) {
                 console.error('Error al iniciar sesión:', err);
@@ -21,4 +22,6 @@ exports.googleAuthCallback = (req, res, next) => {
             return res.redirect(`http://localhost:${process.env.VITE_PORT}`);
         });
     })(req, res, next);
-}; 
+};
+
+module.exports = { googleAuthCallback };

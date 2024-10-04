@@ -1,7 +1,8 @@
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+const passport = require("passport")
 const User = require('../../domain/models/userModel');
-module.exports = (passport) => {
-    
+
+
+function serializeAndDeserializeUser(){
     passport.serializeUser((user, done) => {
         done(null, user);
     });
@@ -12,12 +13,16 @@ module.exports = (passport) => {
             done(err, null);
         }
     });
-    
+}
+
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+function configPassportGoogleOAuth() {
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL,
         scope: ['profile', 'email']
+
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             let userInstance = new User();
@@ -28,7 +33,9 @@ module.exports = (passport) => {
             }];
             let resAgregate = await userInstance.aggregate(dataUser)
             let [user] = resAgregate
+
             if (resAgregate.length) return done(null, user);
+
             let data = {
                 cedula: profile._json.sub,
                 names: profile._json.given_name,
@@ -47,6 +54,6 @@ module.exports = (passport) => {
             done(error, null);
         }
     }));
-
-
 }
+
+module.exports = { configPassportGoogleOAuth, serializeAndDeserializeUser};

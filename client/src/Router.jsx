@@ -5,14 +5,11 @@ import LogIn from './pages/LogIn'
 import "../index.css"
 
 const loader = async () => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-        },
-    }
-    let response = await fetch("http://localhost:3000/auth-check", config)
+    let response = await fetch("http://localhost:3000/auth-check", {
+        method: "GET",
+        credentials: "include"
+    })
     let data = await response.json()
-    console.log(data)
     if (!data.authenticated) {
         throw new Response(null, { status: 401 })
     }

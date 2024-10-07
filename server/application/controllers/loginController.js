@@ -1,5 +1,22 @@
 const passport = require('passport');
 
+function logout (req, res) {
+    req.logout(err => {
+        if (err) {
+            console.error('Error al cerrar sesión:', err);
+            return res.status(500).send("Error durante el logout.").redirect('/');
+        }
+        req.session.destroy(err => {
+            if (err) {
+                console.error('Error al destruir la sesión:', err);
+                return res.status(500).send("Error durante el logout.").redirect('/');
+            }
+            res.clearCookie('connect.sid')
+            res.redirect(`http://localhost:${process.env.VITE_PORT}/login`)
+        });
+    });
+}
+
 function googleAuthCallback (req, res, next) {
     passport.authenticate('google', async (err, user, info) => {
         if (err) {
@@ -24,4 +41,4 @@ function googleAuthCallback (req, res, next) {
     })(req, res, next);
 };
 
-module.exports = { googleAuthCallback };
+module.exports = { googleAuthCallback, logout };

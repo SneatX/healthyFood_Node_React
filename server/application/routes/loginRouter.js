@@ -12,6 +12,10 @@ const authController = require('../controllers/loginController.js');
 serializeAndDeserializeUser()
 configPassportGoogleOAuth()
 
+// LogOut endpoint
+
+router.get("/logout", authController.logout)
+
 // Google OAuth
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 router.get('/auth/google/calback',  authController.googleAuthCallback)

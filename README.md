@@ -1,6 +1,6 @@
-# ENV
+# .ENV template
 
-VITE_PORT=3000
+VITE_PORT=4000
 
 EXPRESS_PORT=3000
 EXPRESS_HOST="localhost"
@@ -8,13 +8,17 @@ EXPRESS_EXPIRE=10000
 
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
-GOOGLE_CALLBACK_URL=https://localhost:3000/login/auth/google/calback
+GOOGLE_CALLBACK_URL=http://localhost:3000/login/auth/google/calback
+
+DISCORD_CLIENT_ID=
+DISCORD_CLIENT_SECRET=
+DISCORD_CALLBACK_URL=http://localhost:3000/login/auth/discord/calback
 
 MONGO_ACCESS="mongodb://"
 MONGO_USER="admin"
 MONGO_PWD="1878"
 MONGO_HOST="localhost"
 MONGO_PORT=27017
-MONGO_DB_NAME="campus"
+MONGO_DB_NAME="bank_simulation"
 
 KEY_SECRET=

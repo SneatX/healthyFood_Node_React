@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ErrorBoundary from './pages/ErrorBoundary'
 import Home from './pages/Home'
 import LogIn from './pages/LogIn'
-import "../index.css"
 
 const loader = async () => {
     let response = await fetch("http://localhost:3000/auth-check", {

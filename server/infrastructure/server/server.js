@@ -5,7 +5,7 @@ const cors = require('cors')
 const mainRouter = require('../../application/routes/mainRouter')
 const sessionManager = require('../middlewares/sessionManager')
 // const { jsonParseErrorHandler } = require('../middlewares/errorHandling')
-// const { limiTotal } = require('../middlewares/rateLimit')
+const { limitTotal } = require('../middlewares/rateLimit')
 
 const createServer = () => {
     //Creacion del servidor con express
@@ -25,7 +25,7 @@ const createServer = () => {
     app.use(passport.session());
 
     // app.use(jsonParseErrorHandler)
-    // app.use(limiTotal)
+    app.use(limitTotal)
 
     //Llamado del router general
     app.use("/", mainRouter)

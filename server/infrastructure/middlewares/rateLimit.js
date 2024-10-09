@@ -18,12 +18,12 @@ const botUserAgents = [
     "vkShare", "W3C_Validator"
 ];
 
-exports.limiTotal = rateLimit({
-    windowMs: 0.30 * 60 * 1000, // 15 minutos
-    max: 100, // Limitar cada IP a 100 solicitudes por ventana
+exports.limitTotal = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 1000, // Limitar cada IP a 1000 solicitudes por ventana
     handler: (req, res, next) => {
         const userAgent = req.get('User-Agent');
-        // Verificar si el User-Agent coincide con alguno de los patrones de bots
+        
         if (userAgent && botUserAgents.some(bot => new RegExp(bot, 'i').test(userAgent))) {
             return res.status(403).json({
                 error: 'Forbidden',

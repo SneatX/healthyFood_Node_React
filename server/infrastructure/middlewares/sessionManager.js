@@ -6,6 +6,7 @@ const sessionManager = session({
     saveUninitialized: false,
     cookie: { 
         secure: false,
+        maxAge: 15 * 60 * 1000 // 15 minutos
     }
 })
 

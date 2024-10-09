@@ -10,7 +10,7 @@ exports.logInValidation = () => {
         }),
 
         body("email")
-        .exists().withMessage("username is required in the body")
+        .exists().withMessage("email is required in the body")
         .isEmail().withMessage("email must be a valid email"),
 
         body("password")

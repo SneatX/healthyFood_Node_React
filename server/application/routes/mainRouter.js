@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const loginRouter = require('./loginRouter')
+const apiRouter = require('./apiRouter')
 
+
+//Api endpoints
+
+router.use("/api", apiRouter)
 
 //Manejo de rutas generales
 router.use("/login", loginRouter)
-
 
 //Rutas específicas del index
 router.get("/auth-check", (req, res) => {

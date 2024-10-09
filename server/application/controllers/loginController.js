@@ -1,4 +1,7 @@
 const passport = require('passport');
+const bcrypt = require('bcryptjs');
+const { validationResult } = require('express-validator');
+const User = require('../../domain/models/userModel');
 
 function logout (req, res) {
     req.logout(err => {
@@ -15,6 +18,39 @@ function logout (req, res) {
             res.redirect(`http://localhost:${process.env.VITE_PORT}/login`)
         });
     });
+}
+
+async function validateLogin(req, res, next){
+
+    const userInstance = new User();
+
+    const validatorErrors = validationResult(req);
+    if (!validatorErrors.isEmpty()) {
+        return res.status(400).json({
+            authenticated: false,
+            user: null,
+            msj: validatorErrors.array()
+        });
+    }
+
+    const { email, password } = req.body;
+    const user = await userInstance.findByEmail(email);
+    if(!user) return res.status(401).json({authenticated: false, user: null, msj: "email not found", errType: 1})
+    
+    if(user.provider != "email") return res.status(401).json({authenticated: false, user: null, msj: "Cannot login with this provider", errType: 2})
+
+    // const isMatch = await bcrypt.compare(password, user.password);
+    // if(!isMatch) return res.status(401).json({authenticated: false, user: null, msj: "Invalid password", errType: 3})
+    if(user.password !== password) return res.status(401).json({authenticated: false, user: null, msj: "Invalid password", errType: 3})
+
+    req.logIn(user, (err) => {
+        if (err) {
+            return res.status(500).json({ authenticated: false, user: null, msj: "Login failed", errType: 4 });
+        }
+
+        return res.status(200).redirect(`http://localhost:${process.env.VITE_PORT}`);
+    });
+
 }
 
 function googleAuthCallback (req, res, next) {
@@ -89,4 +125,10 @@ function githubAuthCallback (req, res, next) {
     })(req, res, next);
 }
 
-module.exports = { googleAuthCallback, discordAuthCallback, githubAuthCallback, logout };
+module.exports = { 
+    googleAuthCallback, 
+    discordAuthCallback, 
+    githubAuthCallback, 
+    logout, 
+    validateLogin 
+};

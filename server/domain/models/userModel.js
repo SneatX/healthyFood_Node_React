@@ -4,36 +4,29 @@ const ConnectToDatabase = require("../../infrastructure/database/mongodb");
 class User{
     async findById (id) {
         let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('cliente');
+        const collection = obj.db.collection('users');
         const [res] = await collection.find({_id: new ObjectId(id)}).toArray();
         return res;
     }
     
     async aggregate(data) {
         let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('cliente');
+        const collection = obj.db.collection('users');
         const res = await collection.aggregate([...data]).toArray();
         return res;
     }
 
     async insert(userData){
         let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('cliente');
+        const collection = obj.db.collection('users');
         const res = await collection.insertMany([userData]);
         return res;
     }
 
-    async findByIdAndUpdate(id, updateData, upsert){
+    async findByEmail(email){
         let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('cliente');
-        const res = await collection.updateOne({ _id: new ObjectId(id) }, { $set: updateData }, upsert);
-        return res;
-    }
-
-    async findByIdAndDelete(id){
-        let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('cliente');
-        const res = await collection.deleteMany({ _id: new ObjectId(id) });
+        const collection = obj.db.collection('users');
+        const [res] = await collection.find({"email" : email}).toArray();
         return res;
     }
     

@@ -14,11 +14,15 @@ DISCORD_CLIENT_ID=
 DISCORD_CLIENT_SECRET=
 DISCORD_CALLBACK_URL=http://localhost:3000/login/auth/discord/calback
 
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GITHUB_CALLBACK_URL=http://localhost:3000/login/auth/github/calback
+
 MONGO_ACCESS="mongodb://"
 MONGO_USER="admin"
 MONGO_PWD="1878"
 MONGO_HOST="localhost"
 MONGO_PORT=27017
-MONGO_DB_NAME="bank_simulation"
+MONGO_DB_NAME=campus
 
 KEY_SECRET=

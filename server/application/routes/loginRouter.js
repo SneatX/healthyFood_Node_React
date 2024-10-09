@@ -8,6 +8,9 @@ const {
     serializeAndDeserializeUser,
     configPassportGithubOAuth
 } = require('../middlewares/passportAuthConfig.js');
+
+const {logInValidation} = require('../validators/loginValidators.js');
+
 const authController = require('../controllers/loginController.js');
 
 // Configuración de Passport
@@ -16,19 +19,18 @@ configPassportGoogleOAuth()
 configPassportDiscordOAuth()
 configPassportGithubOAuth()
 
-// LogOut endpoint
+// LogIn and LogOut endpoints
 
 router.get("/logout", authController.logout)
+router.post("/auth", logInValidation(), authController.validateLogin)
 
-// Google OAuth
+// Passport endpoints
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 router.get('/auth/google/calback',  authController.googleAuthCallback)
 
-// Discord OAuth
 router.get('/auth/discord', passport.authenticate('discord', { scope: ['identify', 'email'] }))
 router.get('/auth/discord/calback',  authController.discordAuthCallback)
 
-// Github OAuth
 router.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }))
 router.get('/auth/github/calback',  authController.githubAuthCallback)
 

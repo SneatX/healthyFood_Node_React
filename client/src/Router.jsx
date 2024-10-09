@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ErrorBoundary from './pages/ErrorBoundary'
-import Home from './pages/Home'
+import Index from './pages/Index'
 import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp'
 
@@ -19,7 +19,7 @@ const loader = async () => {
 const routes = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: <Index />,
         loader: loader,
         errorElement: <ErrorBoundary />,
     },

@@ -1,5 +1,6 @@
 import ProfileHeader from '../components/ProfileHeader.jsx'
 import SearchBar from '../components/SearchBar.jsx'
+import Categories from '../components/Categories.jsx'
 
 export default function Home(){
     return(
@@ -9,6 +10,9 @@ export default function Home(){
             </section>
             <section className=''>
                 <SearchBar />
+            </section>
+            <section>
+                <Categories />
             </section>
         </main>
     )

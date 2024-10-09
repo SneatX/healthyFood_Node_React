@@ -11,4 +11,25 @@ async function searchFood(req, res, next) {
     return res.status(200).json(foods)
 }
 
-module.exports = {searchFood}
+async function getFoodCategories(req, res, next) {
+    let foodInstance = new Food()
+    const categories = await foodInstance.aggregate([
+        {
+          $group: {
+            _id: null,
+            categories: {
+              $addToSet: "$category",
+            },
+          },
+        },
+        {
+          $project: {
+            categories: 1,
+            _id: 0,
+          },
+        },
+      ])
+    return res.status(200).json(categories)
+}
+
+module.exports = {searchFood, getFoodCategories}

@@ -1,5 +1,6 @@
-import './css/LogIn.css'
 import LoginBtn from '../components/LoginBtn.jsx'
+import LoginEmail from '../components/LoginEmail.jsx'
+import './css/LogIn.css'
 export default function LogIn() {
 
 	const loginOptions = [
@@ -40,27 +41,9 @@ export default function LogIn() {
 						<span className='text-[#323232] font-semibold'>OR</span>
 						<div className='w-[100px] h-[3px] rounded-[5px] bg-[#666]' />
 					</div>
-					<input type="email" placeholder="Email" name="email" className='w-64 h-10 rounded border-2 border-main-color bg-bg-color shadow-[4px_4px_var(--main-color)] text-sm font-semibold text-font-color p-1.5 outline-none' />
-					<button className="oauthButton">
-						<div className='flex gap-2'>
-							Continúa
-							<svg
-								className="w-6 h-6"
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth={2}
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<path d="m6 17 5-5-5-5" />
-								<path d="m13 17 5-5-5-5" />
-							</svg>
-						</div>
-					</button>
+
+					<LoginEmail />
+
 				</div>
 			</div>
 		</main>

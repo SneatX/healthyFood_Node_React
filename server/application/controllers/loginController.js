@@ -29,7 +29,7 @@ async function validateLogin(req, res, next){
         return res.status(400).json({
             authenticated: false,
             user: null,
-            msj: validatorErrors.array()
+            msj: validatorErrors.array()[0].msg
         });
     }
 
@@ -48,7 +48,11 @@ async function validateLogin(req, res, next){
             return res.status(500).json({ authenticated: false, user: null, msj: "Login failed", errType: 4 });
         }
 
-        return res.status(200).redirect(`http://localhost:${process.env.VITE_PORT}`);
+        return res.status(200).json({
+            authenticated: true,
+            user: req.user,  
+            msj: "Estás autenticado"
+        });
     });
 
 }

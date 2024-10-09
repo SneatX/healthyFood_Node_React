@@ -79,9 +79,8 @@ async function validateLogin(req, res, next){
     
     if(user.provider != "email") return res.status(401).json({authenticated: false, user: null, msj: "Cannot login with this provider", errType: 2})
 
-    // const isMatch = await bcrypt.compare(password, user.password);
-    // if(!isMatch) return res.status(401).json({authenticated: false, user: null, msj: "Invalid password", errType: 3})
-    if(user.password !== password) return res.status(401).json({authenticated: false, user: null, msj: "Invalid password", errType: 3})
+    const isMatch = await bcrypt.compare(password, user.password);
+    if(!isMatch) return res.status(401).json({authenticated: false, user: null, msj: "Invalid password", errType: 3})
 
     req.logIn(user, (err) => {
         if (err) {

@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ErrorBoundary from './pages/ErrorBoundary'
 import Index from './pages/Index'
+import Home from "./pages/Home"
 import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp'
 
@@ -24,13 +25,19 @@ const routes = createBrowserRouter([
         errorElement: <ErrorBoundary />,
     },
     {
+        path: "/home",
+        element: <Home />,
+        loader: loader,
+        errorElement: <ErrorBoundary />,
+    },
+    {
         path: "/login",
         element: <LogIn />,
     },
     {
         path: "/signup",
         element: <SignUp />,
-    },
+    }
 ])
 
 export default function Router() {

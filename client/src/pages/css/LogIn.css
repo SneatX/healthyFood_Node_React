@@ -71,7 +71,7 @@
 
 .oauthButton {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     gap: 5px;
     padding: 10px;
@@ -135,8 +135,8 @@
     background-color: #4285F4;
 }
 
-.facebook {
-    background-color: #4267B2;
+.github {
+    background-color: #696969;
 }
 
 .discord {

@@ -49,10 +49,16 @@ async function validateSignUp(req, res, next){
     }
 
     await userInstance.insert(newUserData)
-    return res.status(200).json({
-        authenticated: true,
-        user: newUserData,  
-        msj: "Usuario creado"
+
+    req.logIn(newUserData, (err) => {
+        if (err) {
+            return res.status(500).json({ authenticated: false, user: null, msj: "Login failed", errType: 4 });
+        }
+        return res.status(200).json({
+            authenticated: true,
+            user: newUserData,  
+            msj: "Usuario creado"
+        });
     });
 }
 

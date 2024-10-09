@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ErrorBoundary from './pages/ErrorBoundary'
 import Home from './pages/Home'
 import LogIn from './pages/LogIn'
+import SignUp from './pages/SignUp'
 
 const loader = async () => {
     let response = await fetch("http://localhost:3000/auth-check", {
@@ -25,6 +26,10 @@ const routes = createBrowserRouter([
     {
         path: "/login",
         element: <LogIn />,
+    },
+    {
+        path: "/signup",
+        element: <SignUp />,
     },
 ])
 

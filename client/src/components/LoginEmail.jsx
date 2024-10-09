@@ -74,10 +74,11 @@ export default function LoginEmail() {
 
             <button onClick={handleSubmit} className="oauthButton">
                 <div className="flex gap-2">
-                    <p>Continúa</p>
+                    <p>Continue</p>
                     <img src="./icon-continueLogin.svg" alt="Continuar" />
                 </div>
             </button>
+
         </>
     );
 }

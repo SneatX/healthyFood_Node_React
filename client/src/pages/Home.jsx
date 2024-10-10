@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import ProfileHeader from '../components/ProfileHeader.jsx'
 import SearchBar from '../components/SearchBar.jsx'
 import Categories from '../components/Categories.jsx'
 
 export default function Home() {
-
+    const navigate = useNavigate();
     const [foods, setFoods] = useState()
+
+    function handleProduct(product){
+        navigate(`/food/${product._id}`, { state: { product } });
+    }
 
     async function fetchFoods() {
         let response = await fetch("http://localhost:3000/api/foods", {
@@ -39,7 +44,7 @@ export default function Home() {
 
             <section className='flex flex-col gap-16 w-full mt-10'>
                 {foods && foods.map(food => (
-                    <div key={food._id} className="flex flex-col justify-between shadow-2xl border-2 border-[#93D8A2] w-full h-[190px] rounded-3xl p-3">
+                    <div onClick={() => handleProduct(food)} key={food._id} className="flex flex-col justify-between shadow-2xl border-2 border-[#93D8A2] w-full h-[190px] rounded-3xl p-3">
                         <div className='flex justify-between relative'>
                             <p className='bg-[#93D8A2] rounded-lg p-1.5 font-[500]'>{capitalize(food.category.split("_").join(" "))}</p>
                             <img src={food.img} alt="food" className="absolute right-0 -bottom-[100px] w-1/2" />

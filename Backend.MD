@@ -1,121 +1,129 @@
-# backend Documentation
+# Backend Documentation
 
-## This is the documentation for the backend of the Healthy Food Node React project.
+Welcome to the backend documentation for the **Healthy Food Node React** project. This guide outlines the various authentication and food-related API methods available in the application.
 
-### auth methods
+## Authentication Methods
 
-#### googleAuthCallback
+### GET: `/login/auth/google`
+Authenticates the user via Google when they click the Google button.
 
-This method is used to authenticate the user with Google. It is called when the user clicks on the Google button.
+**Parameters:**
+- `req`: The request object.
+- `res`: The response object.
+- `next`: The next middleware function.
 
-The method takes two parameters:
+**Functionality:**
+- Checks if the user is already authenticated.
+- If not authenticated, checks if the user is logged in with Google.
+- If not logged in, redirects to the login page with an error message.
+- If logged in, creates a new user object, saves it to the database, logs the user in, and redirects to the home page.
 
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
+---
 
-The method first checks if the user is already authenticated. If not, it checks if the user is logged in with Google. If the user is not logged in, it redirects the user to the login page with an error message. If the user is logged in, it creates a new user object with the user's information and saves it to the database. Then, it logs the user in and redirects them to the home page.
+### GET: `/login/auth/discord`
+Authenticates the user via Discord when they click the Discord button.
 
-#### discordAuthCallback
+**Parameters:**
+- `req`: The request object.
+- `res`: The response object.
+- `next`: The next middleware function.
 
-This method is used to authenticate the user with Discord. It is called when the user clicks on the Discord button.
+**Functionality:**
+- Checks if the user is already authenticated.
+- If not authenticated, checks if the user is logged in with Discord.
+- If not logged in, redirects to the login page with an error message.
+- If logged in, creates a new user object, saves it to the database, logs the user in, and redirects to the home page.
 
-The method takes two parameters:
+---
 
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
+### GET: `/login/auth/github`
+Authenticates the user via GitHub when they click the GitHub button.
 
-The method first checks if the user is already authenticated. If not, it checks if the user is logged in with Discord. If the user is not logged in, it redirects the user to the login page with an error message. If the user is logged in, it creates a new user object with the user's information and saves it to the database. Then, it logs the user in and redirects them to the home page.
+**Parameters:**
+- `req`: The request object.
+- `res`: The response object.
+- `next`: The next middleware function.
 
-#### githubAuthCallback
+**Functionality:**
+- Checks if the user is already authenticated.
+- If not authenticated, checks if the user is logged in with GitHub.
+- If not logged in, redirects to the login page with an error message.
+- If logged in, creates a new user object, saves it to the database, logs the user in, and redirects to the home page.
 
-This method is used to authenticate the user with GitHub. It is called when the user clicks on the GitHub button.
+---
 
-The method takes two parameters:
+### GET: `/login/logout`
+Logs out the user when they click the "Log out" button.
 
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
+**Parameters:**
+- `req`: The request object.
+- `res`: The response object.
+- `next`: The next middleware function.
 
-The method first checks if the user is already authenticated. If not, it checks if the user is logged in with GitHub. If the user is not logged in, it redirects the user to the login page with an error message. If the user is logged in, it creates a new user object with the user's information and saves it to the database. Then, it logs the user in and redirects them to the home page.
+**Functionality:**
+- Checks if the user is authenticated.
+- If not authenticated, redirects to the login page with an error message.
+- If authenticated, logs the user out and sends a confirmation message back to the client.
 
-### food methods
+---
 
-#### getAllFood
+### POST: `/login/auth`
+Validates the user’s login credentials when they click the "Log in" button.
 
-This method is used to get all the foods from the database. It is called when the user clicks on the "Get all foods" button.
+**Request Body:**
+- `email`: The user's email.
+- `password`: The user's password.
 
-The method takes two parameters:
+---
 
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
+### POST: `/login/signup`
+Creates a new user account when the user clicks the "Sign up" button.
 
-The method first checks if the user is authenticated. If not, it redirects the user to the login page with an error message. If the user is authenticated, it gets all the foods from the database and sends them back to the client.
+**Request Body:**
+- `name`: The user's name.
+- `username`: The user's username.
+- `img`: The user's image URL.
+- `email`: The user's email.
+- `provider`: The provider of the user (e.g., Google, Discord, GitHub, or email).
+- `password`: The user's password.
 
-#### updateStars
+---
 
-This method is used to update the stars of a food. It is called when the user clicks on the "Update stars" button.
+## Food API Methods
 
-The method takes two parameters:
+### GET: `/api/foods`
+Retrieves all food items from the database.
 
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
+**Parameters:**
+- `req`: The request object.
+- `res`: The response object.
+- `next`: The next middleware function.
 
-The method first checks if the user is authenticated. If not, it redirects the user to the login page with an error message. If the user is authenticated, it gets the food with the specified ID from the database. It then checks if the user has already rated the food. If the user has already rated the food, it deletes the rating from the database and sends a message back to the client. If the user has not rated the food, it creates a new rating object with the user's ID and the star value. It then updates the food's ratings and average in the database and sends the updated ratings and average back to the client.
+**Functionality:**
+- Checks if the user is authenticated.
+- If not authenticated, redirects to the login page with an error message.
+- If authenticated, retrieves all food items from the database and sends them to the client.
 
-#### searchFood
+---
 
-This method is used to search for foods. It is called when the user types in the search bar.
+### POST: `/api/stars`
+Updates the star rating of a food item when the user clicks the "Update stars" button.
 
-The method takes two parameters:
+**Request Body:**
+- `id`: The ID of the food item.
+- `stars`: The new star rating.
 
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
+---
 
-The method first checks if the user is authenticated. If not, it redirects the user to the login page with an error message. If the user is authenticated, it gets the search query from the request body and searches for foods with the specified name in the database. It then sends the found foods back to the client.
+### GET: `/api/search`
+Searches for food items based on user input in the search bar.
 
-#### getFoodCategories
+**Query Parameters:**
+- `food`: The name of the food to search for.
 
-This method is used to get the categories of the foods. It is called when the user clicks on the "Get categories" button.
+---
 
-The method takes two parameters:
+### GET: `/api/categories`
+Retrieves the categories of food items available in the database.
 
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
-
-The method first checks if the user is authenticated. If not, it redirects the user to the login page with an error message. If the user is authenticated, it gets the categories of the foods from the database and sends them back to the client.
-
-### user methods
-
-#### logout
-
-This method is used to log out the user. It is called when the user clicks on the "Log out" button.
-
-The method takes two parameters:
-
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
-
-The method first checks if the user is authenticated. If not, it redirects the user to the login page with an error message. If the user is authenticated, it logs the user out and sends a message back to the client.
-
-#### validateLogin
-
-This method is used to validate the login credentials. It is called when the user clicks on the "Log in" button.
-
-The method takes two parameters:
-
-- req: The request object.
-- res: The response object.
-- next: The next middleware function.
-
-The method first checks if the user is already authenticated. If not, it checks if the user is logging in with Google, Discord, or GitHub. If the user is not logging in with Google, Discord, or GitHub, it redirects the user to the login page with an error message. If the user is logging in with Google, Discord, or GitHub, it validates the login credentials and sends a message back to the client.
-
-#### validateSignUp
-
-This method is used to validate the sign up credentials. It is called when the user clicks on the "Sign up" button.
+---

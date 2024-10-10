@@ -8,6 +8,13 @@ class Food{
         const [res] = await collection.find({_id: new ObjectId(id)}).toArray();
         return res;
     }
+
+    async getAllFoods (){
+        let obj = ConnectToDatabase.instanceConnect;
+        const collection = obj.db.collection('foods');
+        const res = await collection.find().toArray();
+        return res;
+    }
     
     async aggregate(data) {
         let obj = ConnectToDatabase.instanceConnect;

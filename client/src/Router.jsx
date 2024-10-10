@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ErrorBoundary from './pages/ErrorBoundary'
 import Index from './pages/Index'
 import Home from "./pages/Home"
+import Food from "./pages/Food"
 import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp'
 
@@ -27,6 +28,12 @@ const routes = createBrowserRouter([
     {
         path: "/home",
         element: <Home />,
+        loader: loader,
+        errorElement: <ErrorBoundary />,
+    },
+    {
+        path: "/food/:id",
+        element: <Food />,
         loader: loader,
         errorElement: <ErrorBoundary />,
     },

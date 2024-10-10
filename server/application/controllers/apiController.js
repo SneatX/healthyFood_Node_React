@@ -1,5 +1,11 @@
 const Food = require('../../domain/models/foodModel')
 
+async function getAllFood(req, res, next) {
+    let FoodInstance = new Food()
+
+    let foods = await FoodInstance.getAllFoods()
+    return res.status(200).json(foods)
+}
 
 async function searchFood(req, res, next) {
     const search = req.query.food
@@ -32,4 +38,4 @@ async function getFoodCategories(req, res, next) {
     return res.status(200).json(categories)
 }
 
-module.exports = {searchFood, getFoodCategories}
+module.exports = {searchFood, getFoodCategories, getAllFood}

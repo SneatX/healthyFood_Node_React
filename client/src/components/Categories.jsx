@@ -9,7 +9,6 @@ export default function Categories() {
             credentials: "include"
         })
         let [data] = await response.json()
-        console.log(data.categories)
         setCategories(data.categories)
     }
 

@@ -1,28 +1,102 @@
-# .ENV template
+# Health Food Node React
 
-VITE_PORT=4000
+## Project setup
 
-EXPRESS_PORT=3000
-EXPRESS_HOST="localhost"
-EXPRESS_EXPIRE=10000
+We recoment use two terminals, one for the server and one for the client.
 
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-GOOGLE_CALLBACK_URL=http://localhost:3000/login/auth/google/calback
+### Installs the server dependencies
 
-DISCORD_CLIENT_ID=
-DISCORD_CLIENT_SECRET=
-DISCORD_CALLBACK_URL=http://localhost:3000/login/auth/discord/calback
+```
+cd client
+npm install
+```
 
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
-GITHUB_CALLBACK_URL=http://localhost:3000/login/auth/github/calback
+### Installs the client dependencies
 
-MONGO_ACCESS="mongodb://"
-MONGO_USER="admin"
-MONGO_PWD="1878"
-MONGO_HOST="localhost"
-MONGO_PORT=27017
-MONGO_DB_NAME=campus
+```
+cd client
+npm install
+```
 
-KEY_SECRET=
+### Run the server
+
+```
+npm run server
+``` 
+### run the client
+
+```
+npm run client
+```
+
+## Project structure
+
+The project is divided in two parts, the server and the client.
+
+The server is a NodeJS application, it uses ExpressJS as a framework and MongoDB as a database.
+
+The client is a ReactJS application, it uses React Router as a framework and TailwindCSS as a styling library.
+
+## Project features
+
+- User authentication
+- Food search
+- Food categories
+- Food ratings
+- Food details
+
+## Project requirements
+
+- NodeJS
+- ExpressJS
+- MongoDB
+- ReactJS
+- React Router
+- TailwindCSS
+- SweetAlert2
+- Vite
+
+## Folder structure
+
+```
+.
+├── client
+│   ├── src
+│   │   ├── components
+│   │   ├── pages
+│   │   ├── router.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── public
+│   │   ├── logo-discord.svg
+│   │   ├── logo-github.svg
+│   │   ├── logo-google.svg
+│   │   ├── logo-twitter.svg
+│   │   ├── rigthArrow.svg
+│   │   └── star.svg
+│   ├── package.json
+│   ├── vite.config.js
+│   └── README.md
+├── server
+│   ├── application
+│   │   ├── controllers
+│   │   ├── domain
+│   │   ├── middlewares
+│   │   ├── routes
+│   │   ├── validators
+│   │   └── index.js
+│   ├── infrastructure
+│   │   ├── database
+│   │   │   ├── mongoDB.js
+│   │   │   └── mongoDB.js
+│   │   └── middlewares
+│   ├── package.json
+│   ├── README.md
+│   └── server.js
+├── README.md
+└── LICENSE
+```
+
+## Created by
+
+[SneatX](https://github.com/SneatX)

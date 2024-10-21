@@ -13,7 +13,7 @@ router.use("/login", loginRouter)
 
 //Rutas específicas del index
 router.get("/auth-check", (req, res) => {
-    console.log("user:",req.user)
+    // console.log("user:",req.user)
     if (req.user) {
         res.status(200).json({
             authenticated: true,

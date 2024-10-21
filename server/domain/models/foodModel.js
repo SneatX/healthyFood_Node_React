@@ -1,21 +1,21 @@
 const { ObjectId } = require("mongodb");
 const ConnectToDatabase = require("../../infrastructure/database/mongoDB");
 
-class Food{
-    async findById (id) {
+class Food {
+    async findById(id) {
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('foods');
-        const [res] = await collection.find({_id: new ObjectId(id)}).toArray();
+        const [res] = await collection.find({ _id: new ObjectId(id) }).toArray();
         return res;
     }
 
-    async getAllFoods (){
+    async getAllFoods() {
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('foods');
         const res = await collection.find().toArray();
         return res;
     }
-    
+
     async aggregate(data) {
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('foods');
@@ -23,14 +23,14 @@ class Food{
         return res;
     }
 
-    async insert(userData){
+    async insert(userData) {
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('foods');
         const res = await collection.insertMany([userData]);
         return res;
     }
 
-    async findByName(name){
+    async findByName(name) {
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('foods');
         const [res] = await collection.find({ "name": { "$regex": `(?i)${name}` } }).toArray();
@@ -40,32 +40,93 @@ class Food{
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('foods');
         const res = await collection.updateOne(
-            { _id: new ObjectId(id) },  
-            { $set: updateData } 
+            { _id: new ObjectId(id) },
+            { $set: updateData }
         );
         return res;
     }
 
-    //ESTO DEBE IR EN OTRO MODEL
-
-    async getRatingByFoodIdUserId(foodId, userId){
+    async newFoodRating(foodId, newStar) {
         let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('ratings');
-        const [res] = await collection.find({foodId: new ObjectId(foodId), userId: new ObjectId(userId)}).toArray();
+        const collection = obj.db.collection('foods');
+        const res = await collection.aggregate([
+            {
+                $match: { _id: new ObjectId(foodId) }
+            },
+            {
+                $set: {
+                    ratings: {
+                        $concatArrays: [
+                            "$ratings",
+                            [{ $literal: newStar }]
+                        ]
+                    }
+                }
+            },
+            {
+                $set: {
+                    average: {
+                        $avg: {
+                            $concatArrays: [
+                                "$ratings",
+                                [newStar]
+                            ]
+                        }
+                    }
+                }
+            }
+        ]).toArray()
         return res;
     }
 
-    async insertRating(newRating){
+    async updateFoodRating(foodId, oldStar, newStar) {
         let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('ratings');
-        const res = await collection.insertMany([newRating]);
-        return res;
-    }
-
-    async deleteRatingById(id){
-        let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('ratings');
-        const res = await collection.deleteOne({_id: new ObjectId(id)});
+        const collection = obj.db.collection('foods');
+        const res = await collection.aggregate([
+            {
+                $match: { _id: new ObjectId(foodId) }
+            },
+            {
+                $set: {
+                    ratings: {
+                        $let: {
+                            vars: {
+                                index: { $indexOfArray: ["$ratings", oldStar] }
+                            },
+                            in: {
+                                $cond: {
+                                    if: { $ne: ["$$index", -1] },
+                                    then: {
+                                        $concatArrays: [
+                                            { $slice: ["$ratings", "$$index"] },
+                                            { $slice: ["$ratings", { $add: ["$$index", 1] }, { $size: "$ratings" }] }
+                                        ]
+                                    },
+                                    else: "$ratings"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                $set: {
+                    ratings: {
+                        $concatArrays: [
+                            "$ratings",
+                            [newStar]
+                        ]
+                    }
+                }
+            },
+            {
+                $set: {
+                    average: {
+                        $avg: "$ratings"
+                    }
+                }
+            }
+        ]).toArray();
         return res;
     }
 }

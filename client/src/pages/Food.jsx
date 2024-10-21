@@ -28,7 +28,8 @@ export default function Food() {
         res = await res.json()
         if (res.newAverage) {
             setStarRating(res.newAverage)
-            console.log(res.newAverage)
+            setTotalRatings(res.updatedRatings.length)
+
         }
         else {
             Swal.fire({
@@ -85,8 +86,6 @@ export default function Food() {
                         <p className="text-xl">Total ratings</p>
                         <p className="bg-[#ffffff81] border-2 border-white rounded-lg px-5 py-2 font-[500]">{totalRatings.toFixed(1)}</p>
                     </div>
-
-                    <p>Ni modos se hizo lo que se pudo jsjsjs</p>
                 </section>
 
             </div>
